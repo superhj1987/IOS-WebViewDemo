@@ -17,11 +17,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    scrollView = [ [UIScrollView alloc ] initWithFrame:[[ UIScreen mainScreen ] bounds ]];
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1);
-    [self.view addSubview: scrollView];
     
-    webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width,1)];
+    
+    
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,40)];
+    searchBar.placeholder = @"test";   //设置占位符
+//    searchBar.delegate = self;
+    
+    webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, searchBar.frame.size.height, self.view.frame.size.width,1)];
     [webView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight];
     webView.layer.cornerRadius = 8;
     webView.layer.masksToBounds = YES;
@@ -38,8 +41,13 @@
     
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.toutiao.com/a6233620781802537218/?utm_campaign=open&utm_medium=webview&utm_source=zhwnl"]];
     
+    scrollView = [ [UIScrollView alloc ] initWithFrame:[[ UIScreen mainScreen ] bounds ]];
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1);
+    [self.view addSubview: scrollView];
+    [scrollView addSubview: searchBar];
     [scrollView addSubview: webView];
     [webView loadRequest:request];
+    
     
 }
 
@@ -53,7 +61,7 @@
     CGRect frame = webView.frame;
     frame.size.height = webView.scrollView.contentSize.height + 50;
     webView.frame = frame;
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, frame.size.height + 100);
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, frame.size.height + searchBar.frame.size.height);
 }
 - (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {

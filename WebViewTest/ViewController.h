@@ -12,6 +12,8 @@
     UIScrollView* scrollView;
     UIWebView *webView;
     UITextView *textView;
+    
+    UISearchBar* searchBar;
 }
 @end
 
